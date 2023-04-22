@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import Loading from './components/loading.jsx';
-import Login_reg from './components/login-reg.jsx';
+import Loading from './components/loading';
+import Login_reg from './components/login-reg';
 import { Route, Routes } from "react-router-dom";
-import Sign_up from "./components/sign_up.jsx";
-import Sign_in from './components/sign_in.jsx';
+import Sign_up from "./components/sign_up";
+import Sign_in from './components/sign_in';
 import Terms_of_use from './components/terms_of_use';
 import Privacy_policy from './components/privacy_policy';
 import Password_recovery1 from './components/password_recovery1';
 import Password_recovery2 from './components/password_recovery2';
 import Password_recovery3 from './components/password_recovery3';
-import Profile from './components/profile/profile.jsx';
+import Profile from './components/profile/profile';
 
 function App() {
   return (

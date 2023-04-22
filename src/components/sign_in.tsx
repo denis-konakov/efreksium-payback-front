@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import style from './../css/sign_in.module.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {useAuthStore} from "../store";
 
 const Sign_in = () => {
     const navigate = useNavigate();
-
+    const login = useAuthStore(state => state.login);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     }
@@ -17,9 +17,16 @@ const Sign_in = () => {
         setPassword(e.target.value);
     }
     
-    const handleLogIn = (e) => {
+    const handleLogIn = async (e) => {
         e.preventDefault();
-        navigate("/profile/user_groups", { replace: true });
+
+        login({
+            email: email,
+            password: password,
+        }).then(() => {
+            navigate("/profile/user_groups", { replace: true });
+        })
+
     }
     return (
         <div className={style.sign_in}>

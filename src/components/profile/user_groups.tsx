@@ -1,8 +1,10 @@
 import React from "react";
 import style from './../../css/user_groups.module.css';
 import { Link } from "react-router-dom";
+import {useAuthStore} from "../../store";
 
 const User_groups = () => {
+    const userName = useAuthStore(state => state.profile.username);
     return (
             <div className={style.user_groups}>
                 <div className={style.header}>
