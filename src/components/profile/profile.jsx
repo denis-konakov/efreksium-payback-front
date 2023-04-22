@@ -11,7 +11,7 @@ import Add_friend_by_number from "./add_friend_by_number.jsx";
 import UserProfile from "./userProfile.jsx";
 import ProfileSub from "./profileSub.jsx";
 
-const Profile = ({ isLoggedIn, setIsLoggedIn, userName }) => {
+const Profile = () => {
     const navigate = useNavigate();
     return (
 

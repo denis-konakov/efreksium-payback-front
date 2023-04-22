@@ -13,33 +13,13 @@ import Password_recovery3 from './components/password_recovery3';
 import Profile from './components/profile/profile.jsx';
 
 function App() {
-
-  // Заставка загрузки
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500)
-  }, [])
-  // /.Заставка загрузки
-
-  // Авторизация
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    if (localStorage.getItem('isLoggedIn') === 'true') return true
-    return false;
-  });
-  const [userName, setUserName] = useState(localStorage.getItem('userName'));
-  // /.Авторизация
-
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={loading ? <Loading /> : <Login_reg />} />
+        <Route path="/" element={<Login_reg />}/>
 
         <Route path="/sign_up" element={<Sign_up />} />
-        <Route path="/sign_in" element={<Sign_in setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>}/>
+        <Route path="/sign_in" element={<Sign_in />}/>
 
         <Route path="/terms_of_use" element={<Terms_of_use />} />
         <Route path="/privacy_policy" element={<Privacy_policy />} />
@@ -48,7 +28,7 @@ function App() {
         <Route path="/password_recovery2" element={<Password_recovery2 />} />
         <Route path="/password_recovery3" element={<Password_recovery3 />} />
 
-        <Route path="/profile/*" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userName={userName}/>}/>
+        <Route path="/profile/*" element={<Profile/>}/>
       </Routes>
     </div>
   );

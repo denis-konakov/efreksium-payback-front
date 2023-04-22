@@ -3,7 +3,7 @@ import style from './../../css/userProfile.module.css';
 import { Route, Routes, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const UserProfile = ({userName}) => {
+const UserProfile = () => {
     return (
         <div className={style.userProfile}>
             

@@ -3,7 +3,7 @@ import style from './../css/sign_in.module.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const Sign_in = ({setUserName, setIsLoggedIn}) => {
+const Sign_in = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -19,15 +19,8 @@ const Sign_in = ({setUserName, setIsLoggedIn}) => {
     
     const handleLogIn = (e) => {
         e.preventDefault();
-
-        localStorage.setItem('isLoggedIn', true);
-        localStorage.setItem('userName', email);
-
-        setUserName(email); 
-        setIsLoggedIn(true);
         navigate("/profile/user_groups", { replace: true });
     }
-//onClick={() => navigate("/sign_in")}
     return (
         <div className={style.sign_in}>
             <form onSubmit={handleLogIn}>

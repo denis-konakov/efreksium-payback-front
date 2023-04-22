@@ -3,7 +3,7 @@ import style from './../../css/friends.module.css';
 import { Route, Routes, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const Friends = ({userName}) => {
+const Friends = () => {
     return (
         <div className={style.friends}>
             <div className={style.header}>
