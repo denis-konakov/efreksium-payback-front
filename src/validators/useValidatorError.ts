@@ -9,6 +9,7 @@ export function useValidatorError<T>(validator: ValidatorAction<T>){
         }).catch((e)=>{
             setError(e);
         })
+        return error === undefined;
     }
     return [error, validate];
 }

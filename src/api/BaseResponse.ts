@@ -9,5 +9,9 @@ export interface BaseResponse<T>{
     }
 }
 
+export interface AuthorizedRequest{
+    token: string;
+}
+
 export type ApiFunctionResponse<T> = Promise<AxiosResponse<T>>
 

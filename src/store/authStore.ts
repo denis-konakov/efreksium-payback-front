@@ -54,13 +54,16 @@ export const useAuthStore = create<authStore>()(devtools(persist(immer((set, get
             });
 
         }catch (e){
-            console.log(e)
+            set(state => {
+                state.error = true;
+                state.isLoggedIn = false;
+                state.program_code = 'connection_error';
+                state.detail = e.message;
+            })
             if (!axios.isAxiosError(e))
                 throw e;
             const r: LoginResponse = e.response.data;
             set(state => {
-                state.isLoggedIn = false;
-                state.error = true;
                 state.program_code = r.detail.program_code;
                 state.detail = r.detail.detail;
             })
