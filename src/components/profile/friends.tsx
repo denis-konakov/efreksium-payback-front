@@ -2,10 +2,13 @@ import React from "react";
 import style from './../../css/friends.module.css';
 import { Route, Routes, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {useAuthStore} from "../../store";
 
-const Friends = ({userName}) => {
+const Friends = () => {
+    const userName = useAuthStore(state => state.profile.username);
     return (
         <div className={style.friends}>
+
             <div className={style.header}>
                 <div className={style.titel}>
                     Ваши друзья
@@ -22,9 +25,9 @@ const Friends = ({userName}) => {
                             </svg>
                         </div>
                     </Link>
-                    <a href="/">
+                    <Link to="/profile/notifications">
                         <div className={style.notifications}></div>
-                    </a>
+                    </Link>
                 </div>
             </div>
 

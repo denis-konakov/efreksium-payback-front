@@ -2,8 +2,10 @@ import React from "react";
 import style from './../../css/add_friend.module.css';
 import { Route, Routes, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {useAuthStore} from "../../store";
 
-const Add_friend = ({userName}) => {
+const Add_friend = () => {
+    const userName = useAuthStore(state => state.profile.username);
     return (
         <div className={style.add_friend}>
             

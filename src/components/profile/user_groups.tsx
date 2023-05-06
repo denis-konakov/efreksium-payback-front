@@ -1,8 +1,10 @@
 import React from "react";
 import style from './../../css/user_groups.module.css';
 import { Link } from "react-router-dom";
+import {useAuthStore} from "../../store";
 
-const User_groups = ({userName}) => {
+const User_groups = () => {
+    const userName = useAuthStore(state => state.profile.username);
     return (
             <div className={style.user_groups}>
                 <div className={style.header}>
@@ -14,9 +16,9 @@ const User_groups = ({userName}) => {
                         <Link to="/profile/new_group">
                             <div className={style.add_group}></div>
                         </Link>
-                        <a href="/">
+                        <Link to="/profile/notifications">
                             <div className={style.notifications}></div>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
