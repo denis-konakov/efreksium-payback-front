@@ -1,0 +1,145 @@
+/* HEADER */
+
+.header {
+    height: 127px;
+
+    text-align: center;
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+
+    background: #85A1C1;
+    border: 1px solid #C6CCD8;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.user_inside_group .content {
+    display: flex;
+    align-items: center;
+
+    height: 29px;
+    margin-bottom: 16px;
+    margin-left: 15px;
+}
+
+.header .titel {
+    height: 36px;
+    max-width: 259px;
+
+    color: #fff;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 1px;
+
+    margin-left: 12px;
+    padding-top: 6px;
+}
+
+.user_inside_group .icon {
+    margin-bottom: 8px;
+}
+
+/* /.HEADER */
+
+
+/* MAIN */
+
+.main {
+    margin-bottom: 287px;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 32px;
+    margin-top: 23px;
+    margin-bottom: 20px;
+}
+
+.top_title {
+    font-size: 24px;
+    line-height: 100%;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.top_subtitle {
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-weight: 330;
+    line-height: 150%;
+}
+
+.top_items {
+    display: flex;
+}
+
+.top_item_add {
+    margin-right: 11px;
+}
+
+/* /.MAIN */
+
+
+
+
+/* ITEMS */
+
+.item {
+    display: flex;
+    align-items: center;
+
+    width: 326px;
+
+    margin: 0 auto;
+    margin-bottom: 15px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border-bottom: 4px solid #d1d1d1;
+
+    background-color: #ebebeb;
+}
+
+.item_main {
+    background-color: #7CA9C8;
+}
+
+.item_ava {
+    height: 42px;
+    width: 37px;
+    background-image: url(./../img/temp_Inv_ava.jpg);
+    background-size: 37px 42px;
+    border-radius: 4px;
+}
+
+.item_desc {
+    margin-left: 13px;
+}
+
+.item_title {
+    font-size: 18px;
+    font-family: "Montserrat";
+    line-height: 165%;
+    font-weight: medium;
+}
+
+.item_count {
+    font-size: 13px;
+    line-height: 150%;
+
+    font-family: 'Lato', sans-serif;
+}
+
+.item_value {
+    font-size: 20px;
+    font-family: "Montserrat";
+    line-height: 150%;
+    font-weight: bold;
+    margin-left: 55px;
+}
+
+
+/* /.ITEMS */

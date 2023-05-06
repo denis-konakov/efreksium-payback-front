@@ -13,10 +13,22 @@ import Password_recovery3 from './components/password_recovery3';
 import Profile from './components/profile/profile';
 
 function App() {
+
+  // Заставка загрузки
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500)
+  }, [])
+  // /.Заставка загрузки
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login_reg />}/>
+        <Route path="/" element={loading ? <Loading /> : <Login_reg />} />
 
         <Route path="/sign_up" element={<Sign_up />} />
         <Route path="/sign_in" element={<Sign_in />}/>

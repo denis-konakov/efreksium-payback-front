@@ -10,7 +10,12 @@ import Add_friend from "./add_friend";
 import Add_friend_by_number from "./add_friend_by_number";
 import UserProfile from "./userProfile";
 import ProfileSub from "./profileSub";
+import User_inside_group from "./user_inside_group";
+import Admin_inside_group from "./admin_inside_group";
+import History from "./history";
+import Notifications from "./notifications";
 import {useAuthStore} from "../../store";
+import PreLoading from "../preLoad/preLoading";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -20,16 +25,23 @@ const Profile = () => {
 
         isLoggedIn ?
         <div className={style.profile}>
+            <PreLoading />
             <Routes>
-                <Route path="user_groups" element={<User_groups/>} />
+                <Route path="preload" element={<PreLoading/>} />
+                <Route path="user_groups" element={<User_groups userName={userName}/>} />
                 <Route path="new_group" element={<New_group />} />
+                <Route path="user_inside_group" element={<User_inside_group />} />
+                <Route path="admin_inside_group" element={<Admin_inside_group />} />
 
-                <Route path="friends" element={<Friends/>} />
-                <Route path="add_friend" element={<Add_friend/>} />
-                <Route path="add_friend_by_number" element={<Add_friend_by_number/>} />
+                <Route path="friends" element={<Friends userName={userName}/>} />
+                <Route path="add_friend" element={<Add_friend userName={userName}/>} />
+                <Route path="add_friend_by_number" element={<Add_friend_by_number userName={userName}/>} />
 
-                <Route path="userProfile" element={<UserProfile/>} />
+                <Route path="userProfile" element={<UserProfile userName={userName}/>} />
                 <Route path="profileSub" element={<ProfileSub />} />
+
+                <Route path="history" element={<History />} />
+                <Route path="notifications" element={<Notifications />} />
             </Routes>
             
             <Footer />

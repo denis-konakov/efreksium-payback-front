@@ -81,7 +81,8 @@
     border-radius: 2px;
 }
 
-.sign_up .button a {
+.sign_up .button a,
+.sign_up .button button {
     width: 328px;
     height: 49px;
     left: 51px;
@@ -104,4 +105,6 @@
     background: #85A1C1;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+
+    cursor: pointer;
 }

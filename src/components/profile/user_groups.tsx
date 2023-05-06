@@ -16,9 +16,9 @@ const User_groups = () => {
                         <Link to="/profile/new_group">
                             <div className={style.add_group}></div>
                         </Link>
-                        <a href="/">
+                        <Link to="/profile/notifications">
                             <div className={style.notifications}></div>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 

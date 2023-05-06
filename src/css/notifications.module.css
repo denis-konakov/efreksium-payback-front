@@ -1,0 +1,180 @@
+/* HEADER */
+
+.header {
+    height: 127px;
+
+    text-align: center;
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+}
+
+.notifications .content {
+    display: flex;
+    align-items: center;
+
+    height: 29px;
+    margin-bottom: 16px;
+    margin-left: 15px;
+}
+
+.header .titel {
+    height: 36px;
+    max-width: 259px;
+
+    color: #000;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 1px;
+
+    margin-left: 15px;
+    padding-top: 6px;
+}
+
+.notifications .icon {
+    margin-bottom: 8px;
+}
+
+/* /.HEADER */
+
+
+
+/* MAIN */
+
+.main {
+    margin-top: 18px;
+    margin-bottom: 33px;
+    width: 348px;
+    margin: 18px auto 33px auto;
+}
+
+.title {
+    font-size: 14px;
+    line-height: 16px;
+
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* /.MAIN */
+
+/* ITEMS */
+
+.notifications_item {
+    margin-bottom: 15px;
+}
+
+.item {
+    position: relative;
+    z-index: 100000;
+    padding: 10px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 348px;
+
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    background-color: #ebebeb;
+}
+
+.add_friend {
+    background-color: #a4b9d1;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 0px;
+}
+
+.item_footer {
+    width: 348px;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 28px;
+    border-radius: 0 0 7px 7px;
+    background-color: #a4b9d1;
+    
+}
+
+.checked {
+    margin-bottom: 86px;
+}
+
+.reject {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+    color: #fff;
+
+    margin-right: 29px;
+}
+
+.accept,
+.already_accept {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+
+    margin-right: 16px;
+}
+
+.item_date,
+.item_date_action {
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 150%;
+
+    margin-left: 15px;
+}
+
+.item_date {
+    margin-top: 10px;
+}
+
+.item_date_action {
+    margin-top: 33px;
+}
+
+.item_actions {
+    display: flex;
+}
+
+.item_main {
+    display: flex;
+    align-items: center;
+}
+
+.item_ava {
+    height: 41px;
+    width: 35px;
+    background-image: url(./../img/temp_Inv_ava.jpg);
+    background-size: 37px 42px;
+    border-radius: 4px;
+
+    margin-left: 15px;
+}
+.item_desc {
+    margin-left: 13px;
+}
+
+.item_title {
+    font-size: 18px;
+    line-height: 150%;
+    font-weight: 300;
+    color: #000;
+}
+
+.item_subtitle {
+    font-size: 12px;
+    line-height: 160%;
+    font-weight: 300;
+}
+
+/* /.ITEMS */
