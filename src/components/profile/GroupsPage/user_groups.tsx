@@ -1,10 +1,13 @@
 import React from "react";
-import style from './../../css/user_groups.module.css';
+import style from '../../../css/user_groups.module.css';
 import { Link } from "react-router-dom";
-import {useAuthStore} from "../../store";
+import {useAuthStore} from "../../../store";
+import DontHaveGroups from "./DontHaveGroups"
+import GroupCard from "./GroupCard";
 
 const User_groups = () => {
-    const userName = useAuthStore(state => state.profile.username);
+    const userName = useAuthStore(state => state.name)();
+    const groups = useAuthStore(state => state.profile.groups);
     return (
             <div className={style.user_groups}>
                 <div className={style.header}>
@@ -27,12 +30,19 @@ const User_groups = () => {
                         Здравствуй, {userName}!
                     </div>
 
-                    <div className={style.logo}></div>
-
-                    <div className={style.desc}>
-                        Создайте новую группу и добавьте в неё друзей, с которыми необходимо разделить счет
-                    </div>
-
+                    {groups.length === 0 ? <DontHaveGroups/> : (
+                        <div>
+                            {groups.map((e, i) => (
+                                <GroupCard
+                                    id={e.id}
+                                    name={e.name}
+                                    history={e.history}
+                                    members={e.members}
+                                    key={i}
+                                />
+                            ))}
+                        </div>
+                    )}
                     <Link to="/profile/new_group">
                         <div className={style.group__button}>
                             <div className={style.button__icon}></div>

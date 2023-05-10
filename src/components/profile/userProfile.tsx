@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {useAuthStore} from "../../store";
 
 const UserProfile = () => {
-    const userName = useAuthStore(state => state.profile.username);
+    const userName = useAuthStore(state => state.name)();
     return (
         <div className={style.userProfile}>
             

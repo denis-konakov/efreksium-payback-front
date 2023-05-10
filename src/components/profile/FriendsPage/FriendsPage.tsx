@@ -1,11 +1,19 @@
 import React from "react";
-import style from './../../css/friends.module.css';
+import style from '../../../css/friends.module.css';
 import { Route, Routes, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {useAuthStore} from "../../store";
+import {useAuthStore} from "../../../store";
+import {ISharedUser} from "../../../models/ISharedUser";
+import DontHaveFriends from "./DontHaveFriends";
+import FriendCard from "./FriendCard"
+import FriendsPageStyles from "./FriendsPage.module.css";
 
-const Friends = () => {
-    const userName = useAuthStore(state => state.profile.username);
+
+
+
+const FriendsPage = () => {
+    const userName = useAuthStore(state => state.name)();
+    const friends = useAuthStore(state => state.profile.friends);
     return (
         <div className={style.friends}>
 
@@ -35,13 +43,13 @@ const Friends = () => {
                 <div className={style.hello}>
                     Здравствуй, {userName}!
                 </div>
-
-                <div className={style.logo}></div>
-
-                <div className={style.desc}>
-                    У Вас нет ни одного друга {":("} Нажмите на кнопку “Добавить друга” и отсканируйте QR-код
-                </div>
-
+                {friends.length === 0 ? <DontHaveFriends/> : (
+                    <div className={FriendsPageStyles.container}>
+                        {friends.map((e, i) => (
+                            <FriendCard id={e.id} username={e.username} avatar={e.avatar} key={i}/>
+                        ))}
+                    </div>
+                )}
                 <Link to="/profile/add_friend">
                     <div className={style.group__button}>
                         <div className={style.button__icon}>
@@ -60,4 +68,4 @@ const Friends = () => {
     );
 }
 
-export default Friends;
+export default FriendsPage;

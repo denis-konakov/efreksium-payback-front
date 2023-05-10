@@ -4,6 +4,7 @@ import {createJSONStorage, devtools, persist} from "zustand/middleware";
 import {API, LoginParams, LoginResponse} from "../api";
 import axios from "axios";
 import {IProfile} from "../models/IProfile";
+import {username} from "../api/parser/username";
 
 interface authStore {
     profile?: IProfile;
@@ -14,8 +15,10 @@ interface authStore {
     error: boolean;
     program_code: string;
     detail: string;
-    login: (p: LoginParams) => Promise<null>;
-    logout: () => Promise<null>;
+    name: () => string;
+    updateProfile: () => Promise<void>;
+    login: (p: LoginParams) => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<authStore>()(devtools(persist(immer((set, get) => ({
@@ -27,12 +30,25 @@ export const useAuthStore = create<authStore>()(devtools(persist(immer((set, get
     error: false,
     program_code: '',
     detail: '',
+    // computed
+    name: () => {
+        const state = get();
+        return username(state.profile);
+    },
     // actions
     logout: async () => {
         set((state) => {
             state.isLoggedIn = false;
             state.token = '';
         })
+    },
+    updateProfile: async () => {
+        const profile = (await API.user.profile({token: get().token})).data;
+        if (!profile.detail.status)
+            throw Error('Ошибка получения профиля');
+        set(state => {
+            state.profile = profile.detail.response;
+        });
     },
     login: async (p: LoginParams) => {
         set(state => {
@@ -46,13 +62,7 @@ export const useAuthStore = create<authStore>()(devtools(persist(immer((set, get
                 state.token = r.detail.response.access_token;
                 state.error = false;
             })
-            const profile = (await API.user.profile(r.detail.response.access_token)).data;
-            if (!profile.detail.status)
-                throw Error('Ошибка получения профиля');
-            set(state => {
-                state.profile = profile.detail.response;
-            });
-
+            await get().updateProfile();
         }catch (e){
             set(state => {
                 state.error = true;

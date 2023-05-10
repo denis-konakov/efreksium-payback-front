@@ -1,5 +1,6 @@
 import {ISubscription} from "./ISubscription";
 import {IGroup} from "./IGroup";
+import {ISharedUser} from "./ISharedUser";
 
 export interface IProfile {
     id: number;
@@ -10,4 +11,5 @@ export interface IProfile {
     email_confirmed: string;
     subscription: ISubscription;
     groups: IGroup[];
+    friends: ISharedUser[];
 }
