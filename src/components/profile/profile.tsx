@@ -27,7 +27,6 @@ const Profile = () => {
     return (
         isLoggedIn ?
         <div className={style.profile}>
-            <PreLoading />
             <Routes>
                 <Route path="preload" element={<PreLoading/>} />
                 <Route path="user_groups" element={<User_groups/>} />

@@ -1,23 +1,32 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import style from './../../css/preLoading.module.css';
 
 const PreLoading = () => {
 
-    window.addEventListener("load", () => {
-        const loader = document.querySelector(".loader");
-      
-        loader.classList.add("loader--hidden");
-      
-        loader.addEventListener("transitionend", () => {
-          document.body.removeChild(loader);
-        });
-    });
-      
+    // Заставка загрузки
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+        setLoading(false);
+        }, 1500)
+    }, [])
+    // /.Заставка загрузки
 
     return (
-        <div className={style.preLoading}>
-            <div class="loader"></div>
-        </div>
+        !loading && (
+        <div className={style.preLoad}>
+            <div className={style.load_block}>
+                <div className={style.loadingio_spinner_pulse_a93e71bqxvt}>
+                    <div className={style.ldio_a8zyvod4bll}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>)
     );
 }
 

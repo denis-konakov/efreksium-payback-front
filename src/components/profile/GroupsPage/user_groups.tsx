@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import style from '../../../css/user_groups.module.css';
 import { Link } from "react-router-dom";
 import {useAuthStore} from "../../../store";
 import DontHaveGroups from "./DontHaveGroups"
 import GroupCard from "./GroupCard";
+import PreLoading from "../../preLoad/preLoading";
 
 const User_groups = () => {
     const userName = useAuthStore(state => state.name)();
     const groups = useAuthStore(state => state.profile.groups);
+
     return (
             <div className={style.user_groups}>
                 <div className={style.header}>

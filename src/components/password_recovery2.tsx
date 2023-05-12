@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import style from './../css/password_recovery.module.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import FormPR2 from "./forms/formPR2";
 
 const Password_recovery2 = () => {
     const navigate = useNavigate();
@@ -57,18 +58,7 @@ const Password_recovery2 = () => {
                     <span>Восстановление<br/>пароля</span>
                 </div>
 
-                <div className={style.form}>
-                    <form onSubmit={handleLogIn}>
-                        <label>
-                            {(codeDirty && codeError) && <div style={{color: 'red'}}>{codeError}</div>}
-                            <input onBlur={e => blurHandler(e)} value={code} onChange={handleCodeChange} name='code' type="text" placeholder="Введите код из письма" required/>
-
-                            <div className={style.button}>
-                                <button disabled={!formCodeValid} type="submit">Далее</button>
-                            </div>
-                        </label>
-                    </form>
-                </div>
+                <FormPR2 />
             
             </div>
         </div>

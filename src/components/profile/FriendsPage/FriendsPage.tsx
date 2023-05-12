@@ -43,13 +43,15 @@ const FriendsPage = () => {
                 <div className={style.hello}>
                     Здравствуй, {userName}!
                 </div>
-                {friends.length === 0 ? <DontHaveFriends/> : (
-                    <div className={FriendsPageStyles.container}>
-                        {friends.map((e, i) => (
-                            <FriendCard id={e.id} username={e.username} avatar={e.avatar} key={i}/>
-                        ))}
-                    </div>
-                )}
+                <DontHaveFriends/>
+                {//friends.length === 0 ? <DontHaveFriends/> : (
+                //    <div className={FriendsPageStyles.container}>
+                //        {friends.map((e, i) => (
+                //            <FriendCard id={e.id} username={e.username} avatar={e.avatar} key={i}/>
+                //        ))}
+                //    </div>
+                //)
+                }
                 <Link to="/profile/add_friend">
                     <div className={style.group__button}>
                         <div className={style.button__icon}>

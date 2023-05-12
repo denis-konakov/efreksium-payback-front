@@ -82,7 +82,8 @@
 }
 
 .sign_up .button a,
-.sign_up .button button {
+.sign_up .button button,
+button {
     width: 328px;
     height: 49px;
     left: 51px;
