@@ -1,22 +1,26 @@
-import type {ValidatorHook, FieldValidators, ValidatorAction} from "./types";
+import type {ValidatorHookGenerator, FieldValidators, ValidatorAction, ValidatorHook, DispatchValidator} from "./types";
 
 import {createValidator} from "./createValidator";
-import {useValidatorError} from "./useValidatorError";
+import {useValidator} from "./useValidator";
 
-import {isNotEmpty, isRegexMatch, isEmail, syncCheck} from "./defaults";
+import {isNotEmpty, isRegexMatch, isEmail, syncCheck, isPhone, isPassword} from "./defaults";
 
 export type {
-    ValidatorHook,
+    ValidatorHookGenerator,
     FieldValidators,
     ValidatorAction,
+    ValidatorHook,
+    DispatchValidator,
 }
 export {
     createValidator,
-    useValidatorError,
+    useValidator,
 }
 export {
     isNotEmpty,
     isRegexMatch,
     isEmail,
-    syncCheck
+    syncCheck,
+    isPhone,
+    isPassword
 }

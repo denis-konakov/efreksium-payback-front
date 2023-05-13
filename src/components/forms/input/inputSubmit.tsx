@@ -6,9 +6,7 @@ const InputSubmit = ({formValid, action}) => {
 
     return (
         <>
-            <div className={style.button}>
-                <button disabled={!formValid} type="submit">{action}</button>
-            </div>
+
         </>
     );
 }

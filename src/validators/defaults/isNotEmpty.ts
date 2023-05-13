@@ -1,6 +1,6 @@
-import type {ValidatorHook} from "../types";
+import type {ValidatorHookGenerator} from "../types";
 
-export function isNotEmpty(): ValidatorHook<string>{
+export function isNotEmpty(): ValidatorHookGenerator<string>{
     return (value: string) => (new Promise<boolean>((resolve) => {
         resolve(value !== "" && value !== undefined);
     }));

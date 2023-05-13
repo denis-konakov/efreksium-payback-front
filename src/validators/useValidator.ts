@@ -1,7 +1,7 @@
-import {ValidatorAction} from "./types";
+import {DispatchValidator, ValidatorAction, ValidatorHook, ValidatorHookGenerator} from "./types";
 import {useState} from "react";
 
-export function useValidatorError<T>(validator: ValidatorAction<T>){
+export function useValidator<T>(validator: ValidatorAction<T>): [string, DispatchValidator<T>]{
     const [error, setError] = useState<string | undefined>(undefined);
     const validate = (value: T) => {
         validator(value).then((e) => {

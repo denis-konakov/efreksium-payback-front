@@ -1,6 +1,6 @@
-import {ValidatorHook} from "../types";
+import {ValidatorHookGenerator} from "../types";
 
-export function isRegexMatch(pattern: RegExp | string): ValidatorHook<string>{
+export function isRegexMatch(pattern: RegExp | string): ValidatorHookGenerator<string>{
     return (value: string) => (new Promise<boolean>((resolve) => {
         resolve(Boolean(value.match(pattern)));
     }));

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useAuthStore} from "../store";
 import InputWithErrorMessage from "./InputWithErrorMessage";
-import {createValidator, isNotEmpty, syncCheck, isEmail, useValidatorError} from "../validators";
+import {createValidator, isNotEmpty, syncCheck, isEmail, useValidator, isPassword} from "../validators";
 import {ErrorMessage} from "./ErrorMessage/ErrorMessage";
 const Sign_in = () => {
 
@@ -21,16 +21,14 @@ const Sign_in = () => {
 
 
 
-    const [validateEmailError, validateEmail] = useValidatorError(createValidator({
+    const [validateEmailError, validateEmail] = useValidator(createValidator({
         'Почта не может быть пустой': [isNotEmpty()],
         'Введена некорректная почта': [isEmail()],
     }))
-    const [validatePasswordError, validatePassword] = useValidatorError(createValidator({
+    const [validatePasswordError, validatePassword] = useValidator(createValidator({
         'Пароль должен быть длиннее 3 и меньше 12': [
             isNotEmpty(),
-            syncCheck<string>((e) => (
-                !(e.length < 3 || e.length > 12)
-            )),
+            isPassword(),
         ]
     }))
 
@@ -54,7 +52,7 @@ const Sign_in = () => {
             password: password,
         }).then(() => {
             navigate("/profile/user_groups", { replace: true });
-        }).catch(() => {})
+        }).catch(null)
 
     }
 

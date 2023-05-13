@@ -1,91 +1,124 @@
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import style from './../../css/sign_up.module.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import InputName from "./input/inputName";
-import InputEmail from "./input/inputEmail";
-import InputPhone from "./input/inputPhone";
-import InputPassword from "./input/inputPassword";
-import InputRepeatPass from "./input/inputRepeatPass";
-import InputSubmit from "./input/inputSubmit";
+import InputWithErrorMessage from "../InputWithErrorMessage";
+import {
+    createValidator,
+    isNotEmpty,
+    useValidator,
+    DispatchValidator,
+    isEmail,
+    isPhone,
+    isPassword, syncCheck
+} from "../../validators";
 
 const FormSignUp = () => {
     const navigate = useNavigate();
 
-    const [valPassword, setValPassword] = useState('');
-    const [valRepPassword, setValRepPassword] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('')
+    const [repeatPassword, setRepeatPassword] = useState('');
+    const [terms, setTerms] = useState(false);
 
-    const [nameError, setNameError] = useState('Имя не может быть пустым!');
-    const [emailError, setEmailError] = useState('E-mail не может быть пустым!');
-    const [passwordError, setPasswordError] = useState('Пароль не может быть пустым!');
-    const [repPasswordError, setRepPasswordError] = useState('Повторите пароль!');
-    const [phoneError, setPhoneError] = useState('Номер телефона не может быть пустым!');
+    const [nameError, nameValidator] = useValidator<string>(createValidator({
+        'Имя не может быть пустым': [isNotEmpty()]
+    }))
 
-    const [checkboxError, setCheckboxError] = useState('');
+    const [emailError, emailValidator] = useValidator<string>(createValidator({
+        'Введите корректную почту': [isNotEmpty(), isEmail()]
+    }));
+    const [phoneError, phoneValidator] = useValidator<string>(createValidator({
+        'Введите корректный номер телефона': [isNotEmpty(), isPhone()]
+    }));
+    const [passwordError, passwordValidator] = useValidator<string>(createValidator({
+        'Пароль должен быть длиннее 3 и меньше 12': [
+            isNotEmpty(),
+            isPassword(),
+        ]
+    }))
+    const [repeatPasswordError, repeatPasswordValidator] = useValidator<string>(createValidator({
+        'Пароли не совпадают': [
+            syncCheck<string>(() => password === repeatPassword)
+        ]
+    }))
 
-    const [formSignupValid, setFormSignupValid] = useState(false);
-
-
-    // Редирект при клике на страницу входа
-    const handleLogIn = async (e) => {
-        e.preventDefault();
-
-        if (!checked) {
-            setCheckboxError('Вы должны принять соглашения!');
-        } else if (valPassword != valRepPassword) {
-            setRepPasswordError('Пароли не совпадают!');
-        } else {
-            navigate("/sign_in", { replace: true });
-        }
+    const onChange = (setState: (a: string) => void, validate: DispatchValidator<string>) => {
+        return (e: ChangeEvent<HTMLInputElement>) => {
+            validate(e.target.value);
+            setState(e.target.value);
+            validateForm();
+        };
+    };
+    const [formValid, setFormValid] = useState(false);
+    const validateForm = () => {
+        setFormValid(terms && [
+            nameValidator,
+            emailValidator,
+            phoneValidator,
+            passwordValidator,
+            repeatPasswordValidator,
+        ].every(e => e()));
     }
-    // /.Редирект при клике на страницу входа
-
-
-
-    // Можно на кнопку "зарегистрироваться" жмякать, или нет? - проверка
-    useEffect(() => {
-        if (emailError || passwordError || phoneError || nameError || repPasswordError) {
-            setFormSignupValid(false);
-        } else {
-            setFormSignupValid(true);
-        }
-    }, [emailError, passwordError, phoneError, nameError, repPasswordError]);
-    // /.Можно на кнопку "зарегистрироваться" жмякать, или нет? - проверка
-
-
-
-    // Checkbox
-    const [checked, setChecked] = useState(false)
-    const handleClick = () => setChecked(!checked)
-    // ./Checkbox
-
+    const onSubmit = () => {
+        validateForm();
+        if (!formValid)
+            return;
+        // TODO: Регистрация
+    }
     return (
             <div className={style.form}>
-                <form onSubmit={handleLogIn}>
-                    <label>
-                        <InputName nameError={nameError} setNameError={setNameError}/>
-
-                        <InputEmail emailError={emailError} setEmailError={setEmailError}/>
-
-                        <InputPhone phoneError={phoneError} setPhoneError={setPhoneError}/>
-
-                        <InputPassword passwordError={passwordError} setPasswordError={setPasswordError} password={valPassword} setPassword={setValPassword}/>
-
-                        <InputRepeatPass repPasswordError={repPasswordError} setRepPasswordError={setRepPasswordError} repPassword={valRepPassword} setRepPassword={setValRepPassword}/>
-
-                        <div>{checkboxError}</div>
-                        <div className={style.agree}>
-                            
-                            <div className={style.checkbox}>
-                                <input onClick={handleClick} checked={checked} type="checkbox" id="agree"/>
-                            </div>
-                            <div className={style.text}>
-                                <p>Я согласен с <Link to="/terms_of_use">условиями пользования</Link> и <Link to="/privacy_policy">политикой конфиденциальности</Link></p>
-                            </div>
+                <form onSubmit={onSubmit}>
+                    <InputWithErrorMessage
+                        type="text"
+                        error={nameError}
+                        onChange={onChange(setName, nameValidator)}
+                        value={name}
+                        placeholder="Имя"
+                    />
+                    <InputWithErrorMessage
+                        type="text"
+                        error={emailError}
+                        onChange={onChange(setEmail, emailValidator)}
+                        value={email}
+                        placeholder="Почта"
+                    />
+                    <InputWithErrorMessage
+                        type="text"
+                        error={phoneError}
+                        onChange={onChange(setPhone, phoneValidator)}
+                        value={phone}
+                        placeholder="Номер телефона"
+                    />
+                    <InputWithErrorMessage
+                        type="password"
+                        error={passwordError}
+                        onChange={onChange(setPassword, passwordValidator)}
+                        value={password}
+                        placeholder="Пароль"
+                    />
+                    <InputWithErrorMessage
+                        type="password"
+                        error={repeatPasswordError}
+                        onChange={onChange(setRepeatPassword, repeatPasswordValidator)}
+                        value={repeatPassword}
+                        placeholder="Повторите пароль"
+                    />
+                    <div className={style.agree}>
+                        <div className={style.checkbox}>
+                            <input onChange={(e) => setTerms(e.target.checked)} checked={terms} type="checkbox" id="agree"/>
                         </div>
-
-                        <InputSubmit formValid={formSignupValid} action={"Зарегистрироваться"}/>
-                    </label>
+                        <div className={style.text}>
+                            <p>Я согласен с <Link to="/terms_of_use">условиями пользования</Link> и <Link to="/privacy_policy">политикой конфиденциальности</Link></p>
+                        </div>
+                    </div>
+                    <div className={style.button}>
+                        <button disabled={!formValid} type="submit">
+                            Зарегистрироваться
+                        </button>
+                    </div>
                 </form>
             </div>
     );

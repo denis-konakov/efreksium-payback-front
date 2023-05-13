@@ -1,17 +1,10 @@
-import {ChangeEventHandler, FocusEventHandler, useState} from "react";
+import {ChangeEventHandler, FocusEventHandler, InputHTMLAttributes, useState} from "react";
 
-interface InputWithValidationProps{
-    name?: string;
-    value?: string;
-    type?: string;
-    required?: boolean;
-    onBlur?: FocusEventHandler;
-    onChange?: ChangeEventHandler;
-    placeholder?: string;
-    error?: string;
+interface InputWithValidationProps extends InputHTMLAttributes<HTMLInputElement>{
+    error: string;
 }
 
-export default function InputWithErrorMessage({validate, error, ...props}: InputWithValidationProps){
+export default function InputWithErrorMessage({error, ...props}: InputWithValidationProps){
     return (
         <label>
             {error !== "" && <div style={{color: 'red'}}>
