@@ -10,13 +10,14 @@ import {
     DispatchValidator,
     isEmail,
     isPhone,
-    isPassword, syncCheck
+    isPassword, syncCheck, isName
 } from "../../validators";
 import {API} from "../../api"
 import {APP_URL} from "../../constants/api";
 import {AxiosError, isAxiosError} from "axios";
 import {useErrorState} from "../../hooks/useErrorState";
 import {ErrorMessage} from "../ErrorMessage/ErrorMessage";
+import SubmitButton from "./input/submitButton";
 
 const FormSignUp = () => {
     const navigate = useNavigate();
@@ -29,7 +30,8 @@ const FormSignUp = () => {
     const [terms, setTerms] = useState(false);
 
     const [nameError, nameValidator] = useValidator<string>(createValidator({
-        'Имя не может быть пустым': [isNotEmpty()]
+        'Имя не может быть пустым': [isNotEmpty()],
+        'Имя содержит запрещенные символы или не соответствует размерам': [isName()]
     }))
 
     const [emailError, emailValidator] = useValidator<string>(createValidator({
@@ -61,15 +63,26 @@ const FormSignUp = () => {
     const errorState = useErrorState();
 
     useEffect(() => {
-        setFormValid([
+        [
             () => nameValidator(name),
             () => emailValidator(email),
             () => phoneValidator(phone),
             () => passwordValidator(password),
             () => repeatPasswordValidator(repeatPassword),
             () => terms,
-        ].every(e => e()))
+        ].forEach(e => e());
     }, [terms, name, email, phone, password, repeatPassword])
+
+    useEffect(() => {
+        setFormValid([
+            () => nameError === undefined,
+            () => emailError === undefined,
+            () => phoneError === undefined,
+            () => passwordError === undefined,
+            () => repeatPasswordError === undefined,
+            () => terms,
+        ].every(e => e()))
+    }, [terms, nameError, emailError, phoneError, passwordError, repeatPasswordError])
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -87,8 +100,9 @@ const FormSignUp = () => {
                     redirect: `${APP_URL}/confirm-email`
                 }
             )
-
             errorState.setError(false);
+            // TODO: Сообщение что всё успешно
+            alert('Успешная регистрация, проверьте почту')
         } catch (e) {
             if (isAxiosError(e)) {
                 const data = (e as AxiosError)?.response?.data;
@@ -144,11 +158,9 @@ const FormSignUp = () => {
                             <p>Я согласен с <Link to="/terms_of_use">условиями пользования</Link> и <Link to="/privacy_policy">политикой конфиденциальности</Link></p>
                         </div>
                     </div>
-                    <div className={style.button}>
-                        <button disabled={!formValid} type="submit">
-                            Зарегистрироваться
-                        </button>
-                    </div>
+                    <SubmitButton disabled={!formValid}>
+                        Зарегистрироваться
+                    </SubmitButton>
                     {errorState.error && <ErrorMessage
                         detail={errorState.detail}
                         program_code={errorState.programCode}

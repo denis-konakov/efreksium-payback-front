@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import style from './../../css/password_recovery.module.css';
 import { useNavigate } from "react-router-dom";
-import InputEmail from "./input/inputEmail";
-import InputSubmit from "./input/inputSubmit";
+import SubmitButton from "./input/submitButton";
 
 const FormPR1 = () => {
     const navigate = useNavigate();
@@ -31,9 +30,8 @@ const FormPR1 = () => {
                 <div className={style.form}>
                     <form onSubmit={handleLogIn}>
                         
-                        <InputEmail emailError={emailError} setEmailError={setEmailError}/>
-                        
-                        <InputSubmit formValid={formPassRecValid} action={"Далее"}/>
+
+                        <SubmitButton formValid={formPassRecValid} action={"Далее"}/>
                         
                     </form>
                 </div>

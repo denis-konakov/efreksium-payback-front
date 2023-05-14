@@ -3,7 +3,7 @@ import type {ValidatorHookGenerator, FieldValidators, ValidatorAction, Validator
 import {createValidator} from "./createValidator";
 import {useValidator} from "./useValidator";
 
-import {isNotEmpty, isRegexMatch, isEmail, syncCheck, isPhone, isPassword} from "./defaults";
+import {isNotEmpty, isRegexMatch, isEmail, syncCheck, isPhone, isPassword, isName} from "./defaults";
 
 export type {
     ValidatorHookGenerator,
@@ -22,5 +22,6 @@ export {
     isEmail,
     syncCheck,
     isPhone,
-    isPassword
+    isPassword,
+    isName,
 }

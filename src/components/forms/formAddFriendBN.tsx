@@ -1,39 +1,87 @@
-import React, {useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import style from './../../css/add_friend.module.css';
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import InputPhone from "./input/inputPhone";
-import InputSubmit from "./input/inputSubmit";
+import SubmitButton from "./input/submitButton";
+import InputWithErrorMessage from "../InputWithErrorMessage";
+import {createValidator, isName, syncCheck, useValidator} from "../../validators";
+import {API} from "../../api";
+import {useAuthStore} from "../../store";
+import {useErrorState} from "../../hooks/useErrorState";
+import {ErrorMessage} from "../ErrorMessage/ErrorMessage";
+import {useNavigate} from "react-router-dom";
+import {AxiosError} from "axios";
+import {FriendsAddResponse} from "../../api/friends/add";
+export interface FormAddFriendBNParams{
+    pathName: string;
+}
 
-const FormAddFriendBN = () => {
-    const [phoneError, setPhoneError] = useState('Номер телефона не может быть пустым!');
+const FormAddFriendBN = ({pathName}: FormAddFriendBNParams) => {
+    const navigate = useNavigate();
+    const [formValid, setFormValid] = useState(false);
+    const [name, setName] = useState(pathName);
+    const [tag, setTag] = useState<number | undefined>(undefined)
+    const [nameError, nameValidator] = useValidator<string>(createValidator({
+        'Имя должно соответствовать шаблону username#id': [
+            async (e) => {
+                setTag(undefined);
+                try{
+                    const [name, user_tag] = e.split('#');
+                    if (!await isName()(name))
+                        return false;
+                    const user_id = parseInt(user_tag);
+                    if (user_id <= 0 || isNaN(user_id))
+                        return false;
+                    setTag(user_id)
+                    return true;
+                }catch (e){}
+                return false;
+            }
+        ]
+    }))
 
-    const [formSignupValid, setFormSignupValid] = useState(false);
+    const errorState = useErrorState();
 
-    const handleLogIn = async (e) => {
+    const token = useAuthStore(store => store.token);
+    const updateProfile = useAuthStore(store => store.updateProfile);
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate("/sign_in", { replace: true });
-    }
-
-    // Можно на кнопку "Кинуть приглашение" жмякать, или нет? - проверка
-    useEffect(() => {
-        if (phoneError) {
-            setFormSignupValid(false);
-        } else {
-            setFormSignupValid(true);
+        if (tag === undefined || tag <= 0 || isNaN(tag))
+            return;
+        try{
+            await API.friends.add({token: token, recipient_id: tag});
+            // TODO: Сообщение что успешно
+            await updateProfile();
+            navigate("/profile/friends");
+        }catch (e){
+            const data = (e as AxiosError<FriendsAddResponse>).response.data;
+            errorState.wrong(data.detail.detail, data.detail.program_code);
         }
-    }, [phoneError]);
-    // /.Можно на кнопку "Кинуть приглашение" жмякать, или нет? - проверка
-
+    }
+    useEffect(() => {
+        setFormValid(nameError === undefined)
+    }, [nameError])
     return (
             <>
-                <form onSubmit={handleLogIn}>
+                <form onSubmit={onSubmit}>
                     <div className={style.input_number}>
-                        <InputPhone phoneError={phoneError} setPhoneError={setPhoneError}/>
+                        <InputWithErrorMessage
+                            error={nameError}
+                            onChange={(e) => {
+                                nameValidator(e.target.value);
+                                setName(e.target.value);
+                            }}
+                            placeholder="Иван#123"
+                            value={name}
+                        />
                     </div>
-                    <Link to="/profile/friends">
-                        <InputSubmit formValid={formSignupValid} action={"Кинуть приглашение"}/>
-                    </Link>
+                    {errorState.error &&
+                    <ErrorMessage
+                        detail={errorState.detail}
+                        program_code={errorState.programCode}
+                        title='Ошибка добавления в друзья'
+                    />}
+                    <SubmitButton disabled={!formValid}>
+                        Добавить в друзья
+                    </SubmitButton>
                 </form>
             </>
     );

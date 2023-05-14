@@ -36,7 +36,7 @@ const Profile = () => {
 
                 <Route path="friends" element={<FriendsPage/>} />
                 <Route path="add_friend" element={<Add_friend/>} />
-                <Route path="add_friend_by_number" element={<Add_friend_by_number/>} />
+                <Route path="add_friend_by_number/:name?" element={<Add_friend_by_number/>} />
 
                 <Route path="userProfile" element={<UserProfile/>} />
                 <Route path="profileSub" element={<ProfileSub />} />

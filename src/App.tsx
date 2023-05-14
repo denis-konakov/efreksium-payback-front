@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react';
 import './App.css';
-import Loading from './components/loading';
 import Login_reg from './components/login-reg';
 import { Route, Routes } from "react-router-dom";
 import Sign_up from "./components/sign_up";
@@ -11,24 +9,13 @@ import Password_recovery1 from './components/password_recovery1';
 import Password_recovery2 from './components/password_recovery2';
 import Password_recovery3 from './components/password_recovery3';
 import Profile from './components/profile/profile';
+import ConfirmEmailPage from "./components/ConfirmEmailPage";
 
 function App() {
-
-  // Заставка загрузки
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500)
-  }, [])
-  // /.Заставка загрузки
-
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={loading ? <Loading /> : <Login_reg />} />
+        <Route path="/" element={ <Login_reg />} />
 
         <Route path="/sign_up" element={<Sign_up />} />
         <Route path="/sign_in" element={<Sign_in />}/>
@@ -41,6 +28,7 @@ function App() {
         <Route path="/password_recovery3" element={<Password_recovery3 />} />
 
         <Route path="/profile/*" element={<Profile/>}/>
+        <Route path="/confirm-email" element={<ConfirmEmailPage/>}/>
       </Routes>
     </div>
   );

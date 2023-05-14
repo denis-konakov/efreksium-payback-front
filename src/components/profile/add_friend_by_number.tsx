@@ -1,23 +1,14 @@
 import React from "react";
 import style from './../../css/add_friend.module.css';
-import { Route, Routes, Link } from "react-router-dom";
+import {Route, Routes, Link, useParams} from "react-router-dom";
 import {useAuthStore} from "../../store";
 import FormAddFriendBN from "../forms/formAddFriendBN";
 
 
 
 const Add_friend_by_number = () => {
-    const handleLogIn = async (e) => {
-        e.preventDefault();
-
-        if (password != repPassword) {
-            setRepPasswordError('Пароли не совпадают!');
-        } else {
-            navigate("/sign_in", { replace: true });
-        }
-    }
-
     const userName = useAuthStore(state => state.name)();
+    const {name} = useParams();
     return (
         <div className={style.add_friend_by_number}>
             
@@ -36,7 +27,7 @@ const Add_friend_by_number = () => {
                     Друг познается в беде, но важно, чтобы он не был чертом...
                 </div>
                 
-                <FormAddFriendBN />
+                <FormAddFriendBN pathName={(name ?? "").replace('.', '#')}/>
 
             </div>
 
