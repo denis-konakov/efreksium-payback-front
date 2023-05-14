@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import style from './../../css/sign_up.module.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,11 @@ import {
     isPhone,
     isPassword, syncCheck
 } from "../../validators";
+import {API} from "../../api"
+import {APP_URL} from "../../constants/api";
+import {AxiosError, isAxiosError} from "axios";
+import {useErrorState} from "../../hooks/useErrorState";
+import {ErrorMessage} from "../ErrorMessage/ErrorMessage";
 
 const FormSignUp = () => {
     const navigate = useNavigate();
@@ -41,32 +46,57 @@ const FormSignUp = () => {
     }))
     const [repeatPasswordError, repeatPasswordValidator] = useValidator<string>(createValidator({
         'Пароли не совпадают': [
-            syncCheck<string>(() => password === repeatPassword)
+            syncCheck<string>(() =>{
+                return password === repeatPassword;
+            })
         ]
     }))
 
-    const onChange = (setState: (a: string) => void, validate: DispatchValidator<string>) => {
+    const onChange = (setState: (a: string) => void) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
-            validate(e.target.value);
             setState(e.target.value);
-            validateForm();
         };
     };
     const [formValid, setFormValid] = useState(false);
-    const validateForm = () => {
-        setFormValid(terms && [
-            nameValidator,
-            emailValidator,
-            phoneValidator,
-            passwordValidator,
-            repeatPasswordValidator,
-        ].every(e => e()));
-    }
-    const onSubmit = () => {
-        validateForm();
+    const errorState = useErrorState();
+
+    useEffect(() => {
+        setFormValid([
+            () => nameValidator(name),
+            () => emailValidator(email),
+            () => phoneValidator(phone),
+            () => passwordValidator(password),
+            () => repeatPasswordValidator(repeatPassword),
+            () => terms,
+        ].every(e => e()))
+    }, [terms, name, email, phone, password, repeatPassword])
+
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if (!formValid)
             return;
-        // TODO: Регистрация
+        try{
+            let r = await API.user.register(
+                {
+                    email: email,
+                    username: name,
+                    number: phone,
+                    password: password
+                },
+                {
+                    redirect: `${APP_URL}/confirm-email`
+                }
+            )
+
+            errorState.setError(false);
+        } catch (e) {
+            if (isAxiosError(e)) {
+                const data = (e as AxiosError)?.response?.data;
+                if (data?.detail?.status === false)
+                    return errorState.wrong(data.detail.detail, data.detail.program_code);
+                return errorState.wrong('Ошибка подключения', (e as AxiosError).code)
+            }
+        }
     }
     return (
             <div className={style.form}>
@@ -74,35 +104,35 @@ const FormSignUp = () => {
                     <InputWithErrorMessage
                         type="text"
                         error={nameError}
-                        onChange={onChange(setName, nameValidator)}
+                        onChange={onChange(setName)}
                         value={name}
                         placeholder="Имя"
                     />
                     <InputWithErrorMessage
                         type="text"
                         error={emailError}
-                        onChange={onChange(setEmail, emailValidator)}
+                        onChange={onChange(setEmail)}
                         value={email}
                         placeholder="Почта"
                     />
                     <InputWithErrorMessage
                         type="text"
                         error={phoneError}
-                        onChange={onChange(setPhone, phoneValidator)}
+                        onChange={onChange(setPhone)}
                         value={phone}
                         placeholder="Номер телефона"
                     />
                     <InputWithErrorMessage
                         type="password"
                         error={passwordError}
-                        onChange={onChange(setPassword, passwordValidator)}
+                        onChange={onChange(setPassword)}
                         value={password}
                         placeholder="Пароль"
                     />
                     <InputWithErrorMessage
                         type="password"
                         error={repeatPasswordError}
-                        onChange={onChange(setRepeatPassword, repeatPasswordValidator)}
+                        onChange={onChange(setRepeatPassword)}
                         value={repeatPassword}
                         placeholder="Повторите пароль"
                     />
@@ -119,6 +149,11 @@ const FormSignUp = () => {
                             Зарегистрироваться
                         </button>
                     </div>
+                    {errorState.error && <ErrorMessage
+                        detail={errorState.detail}
+                        program_code={errorState.programCode}
+                        title={'Ошибка'}
+                    />}
                 </form>
             </div>
     );

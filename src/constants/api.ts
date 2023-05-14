@@ -1,2 +1,3 @@
 export const API_URL: string = process.env.REACT_APP_API_URL;
 export const ATTACHMENTS_URL: string = process.env.REACT_APP_ATTACHMENTS_URL;
+export const APP_URL: string = process.env.REACT_APP_URL;

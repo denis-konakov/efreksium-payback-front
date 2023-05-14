@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 import {immer} from 'zustand/middleware/immer';
 import {createJSONStorage, devtools, persist} from "zustand/middleware";
-import {API, LoginParams, LoginResponse} from "../api";
+import {API, LoginBody, LoginResponse} from "../api";
 import axios from "axios";
 import {IProfile} from "../models/IProfile";
 import {username} from "../api/parser/username";
@@ -17,7 +17,7 @@ interface authStore {
     detail: string;
     name: () => string;
     updateProfile: () => Promise<void>;
-    login: (p: LoginParams) => Promise<void>;
+    login: (p: LoginBody) => Promise<void>;
     logout: () => Promise<void>;
 }
 
@@ -50,7 +50,7 @@ export const useAuthStore = create<authStore>()(devtools(persist(immer((set, get
             state.profile = profile.detail.response;
         });
     },
-    login: async (p: LoginParams) => {
+    login: async (p: LoginBody) => {
         set(state => {
             state.isLoading = true;
         });
