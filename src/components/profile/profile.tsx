@@ -24,8 +24,11 @@ const Profile = () => {
     useEffect(() => {
         updateProfile().then(null).catch(null)
     }, []);
+    useEffect(() => {
+        if (!isLoggedIn)
+            navigate("/sign_in")
+    }, [isLoggedIn]);
     return (
-        isLoggedIn ?
         <div className={style.profile}>
             <Routes>
                 <Route path="preload" element={<PreLoading/>} />
@@ -46,7 +49,6 @@ const Profile = () => {
             </Routes>
             <Footer />
         </div>
-        : navigate("/", { replace: true })
     );
 }
 

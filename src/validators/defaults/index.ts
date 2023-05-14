@@ -5,6 +5,7 @@ import {syncCheck} from "./syncCheck";
 import {isPhone} from "./isPhone";
 import {isPassword} from "./isPassword";
 import {isName} from "./isName";
+import {isGroupName} from "./isGroupName";
 
 export {
     isNotEmpty,
@@ -14,4 +15,5 @@ export {
     isPhone,
     isPassword,
     isName,
+    isGroupName,
 }

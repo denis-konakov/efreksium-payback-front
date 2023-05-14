@@ -6,6 +6,8 @@ import {create as group_create} from "./group/create"
 import {register as user_register} from "./user/register";
 import {confirm_email as user_confirm_email} from "./user/confirm_email";
 import {add as friends_add} from "./friends/add";
+import {member_add as group_member_add} from "./group/member_add";
+
 export const API = {
     user: {
         login: user_login,
@@ -15,6 +17,9 @@ export const API = {
     },
     group: {
         create: group_create,
+        member: {
+            add: group_member_add
+        }
     },
     friends: {
         add: friends_add,
