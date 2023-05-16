@@ -1,5 +1,7 @@
 /* HEADER */
-
+* {
+    box-sizing: border-box;
+}
 .header {
     height: 127px;
 
@@ -86,13 +88,16 @@
 
 .area {
     display: flex;
+    justify-content: end;
     width: 385px;
     margin: 0 auto;
 }
 
 .item {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    gap: 4px;
 
     width: 312px;
 
@@ -113,12 +118,14 @@
     height: 42px;
     width: 37px;
     background-image: url(./../img/temp_Inv_ava.jpg);
-    background-size: 37px 42px;
+    background-size: auto 37px;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 4px;
 }
 
 .item_desc {
-    margin-left: 13px;
+    width: 100%;
 }
 
 .item_title {

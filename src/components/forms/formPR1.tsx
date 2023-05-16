@@ -27,14 +27,11 @@ const FormPR1 = () => {
     
 
     return (
-                <div className={style.form}>
-                    <form onSubmit={handleLogIn}>
-                        
-
-                        <SubmitButton formValid={formPassRecValid} action={"Далее"}/>
-                        
-                    </form>
-                </div>
+        <div className={style.form}>
+            <form onSubmit={handleLogIn}>
+                <SubmitButton formValid={formPassRecValid} action={"Далее"}/>
+            </form>
+        </div>
 
     );
 }

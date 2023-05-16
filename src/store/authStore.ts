@@ -46,6 +46,9 @@ export const useAuthStore = create<authStore>()(devtools(persist(immer((set, get
         const profile = (await API.user.profile({token: get().token})).data;
         if (!profile.detail.status)
             throw Error('Ошибка получения профиля');
+        profile.detail.response.groups.forEach((group) => {
+            group.members.sort((a, b) => a.role === "owner" ? -1 : 1)
+        })
         set(state => {
             state.profile = profile.detail.response;
         });

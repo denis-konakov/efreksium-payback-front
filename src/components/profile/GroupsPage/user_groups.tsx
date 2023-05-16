@@ -18,7 +18,7 @@ const User_groups = () => {
                     </div>
 
                     <div className={style.nav}>
-                        <Link to="/profile/new_group">
+                        <Link to="/profile/groups/new">
                             <div className={style.add_group}></div>
                         </Link>
                         <Link to="/profile/notifications">
@@ -35,17 +35,19 @@ const User_groups = () => {
                     {groups.length === 0 ? <DontHaveGroups/> : (
                         <div>
                             {groups.map((e, i) => (
-                                <GroupCard
-                                    id={e.id}
-                                    name={e.name}
-                                    history={e.history}
-                                    members={e.members}
-                                    key={i}
-                                />
+                                <Link to={`/profile/groups/${e.id}`}>
+                                    <GroupCard
+                                        id={e.id}
+                                        name={e.name}
+                                        history={e.history}
+                                        members={e.members}
+                                        key={i}
+                                    />
+                                </Link>
                             ))}
                         </div>
                     )}
-                    <Link to="/profile/new_group">
+                    <Link to="/profile/groups/new">
                         <div className={style.group__button}>
                             <div className={style.button__icon}></div>
                             <div className={style.button__title}>Создать группу</div>

@@ -16,6 +16,7 @@ import History from "./history";
 import Notifications from "./notifications";
 import {useAuthStore} from "../../store";
 import PreLoading from "../preLoad/preLoading";
+import InsideGroupRouter from "./InsideGroupPage/InsideGroupRouter";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Profile = () => {
             <Routes>
                 <Route path="preload" element={<PreLoading/>} />
                 <Route path="user_groups" element={<User_groups/>} />
-                <Route path="new_group" element={<New_group />} />
+
                 <Route path="user_inside_group" element={<User_inside_group />} />
                 <Route path="admin_inside_group" element={<Admin_inside_group />} />
 
@@ -46,6 +47,11 @@ const Profile = () => {
 
                 <Route path="history" element={<History />} />
                 <Route path="notifications" element={<Notifications />} />
+                <Route path="groups/new" element={<New_group />} />
+                <Route path="groups/:id" element={<InsideGroupRouter/>}/>
+                <Route path="groups" element={<User_groups />} />
+
+
             </Routes>
             <Footer />
         </div>

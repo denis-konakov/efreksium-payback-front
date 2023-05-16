@@ -8,7 +8,7 @@ export type GroupCreateResponse = BaseResponse<{
 export interface GroupCreateParams extends AuthorizedRequest{
     name: string;
 }
-export async function create(params: GroupCreateParams): ApiFunctionResponse<GroupCreateResponse>{
+export function create(params: GroupCreateParams): ApiFunctionResponse<GroupCreateResponse>{
     return apiClient.post(
         '/group/create',
         {},
