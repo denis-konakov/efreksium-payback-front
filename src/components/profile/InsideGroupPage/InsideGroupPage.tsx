@@ -129,11 +129,12 @@ export default function InsideGroupPage({group, ...props}: InsideGroupPageProps)
                             member={e}
                             canEdit={canEdit}
                             modifyValue={(function(){
+                                let nb = e.balance;
                                 if (e.role === "owner")
-                                    return e.balance + addBalance;
-                                if (!selectedMembers[e.id])
-                                    return e.balance
-                                return e.balance - modifyValue();
+                                    nb += addBalance;
+                                if (selectedMembers[e.id])
+                                    nb -= modifyValue();
+                                return nb;
                             })()}
                             inputProps={{
                                 checked: selectedMembers[e.id],
