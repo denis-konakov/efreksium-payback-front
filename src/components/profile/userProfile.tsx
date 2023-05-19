@@ -71,12 +71,12 @@ const UserProfile = () => {
                     </Link>
                 </div>
 
-                <div className={style.option}>
-                    <div className={style.desc}>
-                        <div className={style.title}>Черт ?</div>
-                        <div className={style.subtitle}>удалить аккаунт, бросив кентиков...</div>
-                    </div>
-                </div>
+                {/*<div className={style.option}>*/}
+                {/*    <div className={style.desc}>*/}
+                {/*        <div className={style.title}>Черт ?</div>*/}
+                {/*        <div className={style.subtitle}>удалить аккаунт, бросив кентиков...</div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 
             </div>
 

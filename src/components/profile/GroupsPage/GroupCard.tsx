@@ -1,7 +1,6 @@
 import {attachment, username} from "../../../api/parser";
 import React from "react";
 import {IGroup} from "../../../models/IGroup";
-import {IGroupMember} from "../../../models/IGroupMember";
 import styles from "./GroupCard.module.css";
 const GroupCard = (group: IGroup) => {
 
