@@ -1,43 +1,23 @@
+import {IGroup} from "../../../models/IGroup";
+import style from "../../../css/history.module.css";
+import {Link} from "react-router-dom";
 import React from "react";
-import style from './../../css/history.module.css';
-import { Link } from "react-router-dom";
-import {useAuthStore} from "../../store";
-import {IHistoryEntry} from "../../models/IHistoryEntry";
-import {dateof, groupby, history_groupby_day} from "../../api/parser";
-import {IGroup} from "../../models/IGroup";
-import GroupHistoryActionCard from "./InsideGroupPage/GroupHistoryActionCard";
-import {useUserSolver} from "../../hooks/useUserSolver";
+import {IHistoryEntry} from "../../../models/IHistoryEntry";
+import GroupHistoryActionCard from "./GroupHistoryActionCard";
+import {history_groupby_day} from "../../../api/parser";
+import {useUserSolver} from "../../../hooks/useUserSolver";
 
-interface HistoryEntryWithGroup{
+export interface GroupHistoryPageProps{
     group: IGroup;
-    entry: IHistoryEntry<string, {}>;
 }
 
 
-const History = () => {
-    const profile = useAuthStore(s => s.profile);
-    const global_history: HistoryEntryWithGroup[] = [].concat.apply([], profile.groups.map(
-        group => {
-            return group.history.map(
-                entry => {
-                    return {
-                        group: group,
-                        entry: entry,
-                    }
-                }
-            )
-        }
-    ));
-
+export default function GroupHistoryPage({...props}: GroupHistoryPageProps){
     const solve = useUserSolver();
-    global_history.sort(
-        (a, b) => new Date(a.entry.time) > new Date(b.entry.time) ? 1 : -1);
-    const {groups, group_ordering} = groupby(global_history, (s) => {
-       return dateof(s.entry);
-    });
-    return (
+    const history = props.group.history;
+    const {dates, dates_order} = history_groupby_day(history);
+    return (<>
         <div className={style.history}>
-            
             <div className={style.header}>
                 <div className={style.content}>
                     <Link to="/profile/user_groups">
@@ -55,25 +35,22 @@ const History = () => {
             </div>
 
             <div className={style.main}>
-                {group_ordering.map((e, i) => (
-                    <div className={style.history_items} key={i}>
-                        <div className={style.title}>{e}</div>
-                        {groups.get(e).reverse().map((act: HistoryEntryWithGroup, j) => (
+                {dates_order.map((key, i) => (
+                    <div className={style.history_items}>
+                        <div className={style.title}>{key}</div>
+                        {dates.get(key).reverse().map((act, i) => (
                             <GroupHistoryActionCard
-                                group={act.group}
-                                action={act.entry}
+                                action={act}
+                                group={props.group}
                                 solve={solve}
-                                key={j}
+                                key={i}
                             />
                         ))}
-
                     </div>
                 ))}
 
             </div>
 
         </div>
-    );
+    </>);
 }
-
-export default History;

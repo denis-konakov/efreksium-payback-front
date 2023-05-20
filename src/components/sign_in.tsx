@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import style from './../css/sign_in.module.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,11 @@ import {ErrorMessage} from "./ErrorMessage/ErrorMessage";
 const Sign_in = () => {
 
     const navigate = useNavigate();
+    const isLoggedIn = useAuthStore(s => s.isLoggedIn)
+    useEffect(() => {
+        if (isLoggedIn)
+            navigate('/profile');
+    }, [])
     const login = useAuthStore(state => state.login);
     const isLoading = useAuthStore(state => state.isLoading);
     const detail = useAuthStore(state => state.detail);

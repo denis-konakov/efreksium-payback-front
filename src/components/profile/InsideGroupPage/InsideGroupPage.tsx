@@ -134,6 +134,7 @@ export default function InsideGroupPage({group, ...props}: InsideGroupPageProps)
                                     nb += addBalance;
                                 if (selectedMembers[e.id])
                                     nb -= modifyValue();
+                                if (isNaN(nb)) nb = e.balance;
                                 return nb;
                             })()}
                             inputProps={{

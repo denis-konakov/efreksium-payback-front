@@ -35,9 +35,6 @@ const Profile = () => {
                 <Route path="preload" element={<PreLoading/>} />
                 <Route path="user_groups" element={<User_groups/>} />
 
-                <Route path="user_inside_group" element={<User_inside_group />} />
-                <Route path="admin_inside_group" element={<Admin_inside_group />} />
-
                 <Route path="friends" element={<FriendsPage/>} />
                 <Route path="add_friend" element={<Add_friend/>} />
                 <Route path="add_friend_by_number/:name?" element={<Add_friend_by_number/>} />
@@ -50,8 +47,7 @@ const Profile = () => {
                 <Route path="groups/new" element={<New_group />} />
                 <Route path="groups/:id" element={<InsideGroupRouter/>}/>
                 <Route path="groups" element={<User_groups />} />
-
-
+                <Route path={"/"} element={<User_groups/>}/>
             </Routes>
             <Footer />
         </div>
