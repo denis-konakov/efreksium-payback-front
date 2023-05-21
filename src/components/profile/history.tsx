@@ -55,7 +55,7 @@ const History = () => {
             </div>
 
             <div className={style.main}>
-                {group_ordering.map((e, i) => (
+                {group_ordering.reverse().map((e, i) => (
                     <div className={style.history_items} key={i}>
                         <div className={style.title}>{e}</div>
                         {groups.get(e).reverse().map((act: HistoryEntryWithGroup, j) => (

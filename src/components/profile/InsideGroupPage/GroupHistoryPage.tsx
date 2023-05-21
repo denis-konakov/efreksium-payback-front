@@ -35,7 +35,7 @@ export default function GroupHistoryPage({...props}: GroupHistoryPageProps){
             </div>
 
             <div className={style.main}>
-                {dates_order.map((key, i) => (
+                {dates_order.reverse().map((key, i) => (
                     <div className={style.history_items}>
                         <div className={style.title}>{key}</div>
                         {dates.get(key).reverse().map((act, i) => (

@@ -3,9 +3,11 @@ import style from './../../css/add_friend.module.css';
 import { Route, Routes, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useAuthStore} from "../../store";
+import {attachment} from "../../api/parser";
 
 const Add_friend = () => {
-    const userName = useAuthStore(state => state.profile.username);
+    const userName = useAuthStore(state => state.name)();
+    const avatar = useAuthStore(s => s.profile.avatar);
     return (
         <div className={style.add_friend}>
             
@@ -13,7 +15,7 @@ const Add_friend = () => {
                 <Link to="/profile/friends">
                     <div className={style.back_button}></div>
                 </Link>
-                <div className={style.img}></div>
+                <div className={style.img} style={{backgroundImage: `url('${attachment(avatar)}')`}}/>
             </div>
 
             <div className={style.desc}>

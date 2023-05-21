@@ -3,9 +3,11 @@ import style from './../../css/userProfile.module.css';
 import { Route, Routes, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useAuthStore} from "../../store";
+import {attachment} from "../../api/parser";
 
 const UserProfile = () => {
     const userName = useAuthStore(state => state.name)();
+    const avatar = useAuthStore(s => s.profile.avatar);
     return (
         <div className={style.userProfile}>
             
@@ -13,7 +15,7 @@ const UserProfile = () => {
                 <Link to="/profile/user_groups">
                     <div className={style.back_button}></div>
                 </Link>
-                <div className={style.img}></div>
+                <div className={style.img} style={{backgroundImage: `url('${attachment(avatar)}')`}}/>
                 <div className={style.type_profile}></div>
             </div>
 
