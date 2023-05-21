@@ -4,10 +4,13 @@ import { Route, Routes, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useAuthStore} from "../../store";
 import {attachment} from "../../api/parser";
-
+import {QRCodeSVG} from 'qrcode.react'
+import {APP_URL} from "../../constants/api";
 const Add_friend = () => {
     const userName = useAuthStore(state => state.name)();
-    const avatar = useAuthStore(s => s.profile.avatar);
+    const profile = useAuthStore(s => s.profile);
+    const avatar = profile.avatar;
+    const qr_url = `${APP_URL}/profile/add_friend_by_number/${profile.username}.${profile.id}`
     return (
         <div className={style.add_friend}>
             
@@ -26,7 +29,10 @@ const Add_friend = () => {
                     Покажи шарющему кентику, он поймёт, что надо делать...
                 </div>
 
-                <div className={style.qr_code}></div>
+                <QRCodeSVG
+                    className={style.qr_code}
+                    value={qr_url}
+                />
             </div>
 
             <Link to="/profile/add_friend_by_number">

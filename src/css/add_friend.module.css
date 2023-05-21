@@ -51,7 +51,7 @@
 .desc .qr_code {
     width: 193px;
     height: 193px;
-    background-image: url(/src/img/temp_qr.jpg);
+    /*background-image: url(/src/img/temp_qr.jpg);*/
     background-size: 193px 193px;
 
     margin: 0 auto;

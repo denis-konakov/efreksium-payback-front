@@ -17,29 +17,41 @@ export interface FormAddFriendBNParams{
 const FormAddFriendBN = ({pathName}: FormAddFriendBNParams) => {
     const navigate = useNavigate();
     const [formValid, setFormValid] = useState(false);
-    const [name, setName] = useState(pathName);
+    const [name, setName] = useState('');
+    useEffect(() => {
+        setName(pathName);
+    }, [pathName])
+    const parseTag = async (e: string) => {
+        try{
+            const [name, user_tag] = e.split('#');
+            if (!await isName()(name))
+                return undefined;
+            const user_id = parseInt(user_tag);
+            if (user_id <= 0 || isNaN(user_id))
+                return undefined;
+            return user_id;
+        }catch (e){}
+        return undefined;
+    }
     const [tag, setTag] = useState<number | undefined>(undefined)
     const [nameError, nameValidator] = useValidator<string>(createValidator({
         'Имя должно соответствовать шаблону username#id': [
             async (e) => {
-                setTag(undefined);
-                try{
-                    const [name, user_tag] = e.split('#');
-                    if (!await isName()(name))
-                        return false;
-                    const user_id = parseInt(user_tag);
-                    if (user_id <= 0 || isNaN(user_id))
-                        return false;
-                    setTag(user_id)
-                    return true;
-                }catch (e){}
-                return false;
+                const t = await parseTag(e);
+                if (t === undefined)
+                    return false;
+                setTag(t);
+                return true;
             }
         ]
     }))
 
     const errorState = useErrorState();
-
+    useEffect(() => {
+        setTimeout(async () => {
+            setTag(await parseTag(name));
+        }, 0)
+    }, [name])
     const token = useAuthStore(store => store.token);
     const updateProfile = useAuthStore(store => store.updateProfile);
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
