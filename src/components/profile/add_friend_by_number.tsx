@@ -3,11 +3,13 @@ import style from './../../css/add_friend.module.css';
 import {Route, Routes, Link, useParams} from "react-router-dom";
 import {useAuthStore} from "../../store";
 import FormAddFriendBN from "../forms/formAddFriendBN";
+import {attachment} from "../../api/parser";
 
 
 
 const Add_friend_by_number = () => {
     const userName = useAuthStore(state => state.name)();
+    const avatar = useAuthStore(s => s.profile.avatar);
     const {name} = useParams();
     return (
         <div className={style.add_friend_by_number}>
@@ -16,7 +18,7 @@ const Add_friend_by_number = () => {
                 <Link to="/profile/add_friend">
                     <div className={style.back_button}></div>
                 </Link>
-                <div className={style.img}></div>
+                <div className={style.img}  style={{backgroundImage: `url('${attachment(avatar)}')`}}></div>
             </div>
 
             <div className={style.desc}>
