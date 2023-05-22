@@ -22,7 +22,9 @@ interface NewGroupUserCardProps{
 }
 
 const NewGroupUserCard = (data: NewGroupUserCardProps) => {
+    const id = `add-user-${data.user.id}`;
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.checked)
         data.setValue({
             ...data.value,
             [data.user.id]: e.target.checked
@@ -34,12 +36,12 @@ const NewGroupUserCard = (data: NewGroupUserCardProps) => {
                 <input
                     className={style.custom_checkbox}
                     type="checkbox"
-                    id="color-1"
+                    id={`cb-${id}`}
                     name="color-1"
                     checked={data.value[data.user.id]}
                     onChange={onChange}
                 />
-                <label htmlFor="color-1">
+                <label htmlFor={`cb-${id}`}>
                     <div className={style.group_invite_friend_info}>
                         <div
                             className={style.group_invite_friend_ava}

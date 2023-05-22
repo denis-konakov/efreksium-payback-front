@@ -85,7 +85,7 @@ const Sign_in = () => {
                     <InputWithErrorMessage
                         name='password'
                         value={password}
-                        type="text"
+                        type="password"
                         placeholder="Введите пароль"
                         onChange={handlePasswordChange}
                         error={validatePasswordError}
