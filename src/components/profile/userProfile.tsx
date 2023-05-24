@@ -8,6 +8,12 @@ import {attachment} from "../../api/parser";
 const UserProfile = () => {
     const userName = useAuthStore(state => state.name)();
     const avatar = useAuthStore(s => s.profile.avatar);
+    const logout = useAuthStore(s => s.logout);
+    const navigate = useNavigate();
+    const handleExit = async () => {
+        await logout();
+        navigate('/');
+    }
     return (
         <div className={style.userProfile}>
             
@@ -73,12 +79,12 @@ const UserProfile = () => {
                     </Link>
                 </div>
 
-                {/*<div className={style.option}>*/}
-                {/*    <div className={style.desc}>*/}
-                {/*        <div className={style.title}>Черт ?</div>*/}
-                {/*        <div className={style.subtitle}>удалить аккаунт, бросив кентиков...</div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                <div className={style.option} onClick={handleExit}>
+                    <div className={style.desc}>
+                        <div className={style.title}>Черт ?</div>
+                        <div className={style.subtitle}>выйти из аккаунта, бросив кентиков...</div>
+                    </div>
+                </div>
                 
             </div>
 
