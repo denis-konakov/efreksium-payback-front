@@ -81,7 +81,7 @@ const UserProfile = () => {
 
                 <div className={style.option} onClick={handleExit}>
                     <div className={style.desc}>
-                        <div className={style.title}>Черт ?</div>
+                        <div className={style.title}>Выход</div>
                         <div className={style.subtitle}>выйти из аккаунта, бросив кентиков...</div>
                     </div>
                 </div>

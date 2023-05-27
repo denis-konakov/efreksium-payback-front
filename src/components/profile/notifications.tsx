@@ -23,10 +23,10 @@ const Notifications = () => {
             </div>
 
             <div className={style.main}>
-                <iframe src="https://www.youtube.com/embed/PkT0PJwy8mI"
+                {/*<iframe src="https://www.youtube.com/embed/PkT0PJwy8mI"
                         title="Ты думал что-то здесь будет?" frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen/>
+                        allowFullScreen/>*/}
             </div>
 
         </div>
